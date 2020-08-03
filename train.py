@@ -40,9 +40,14 @@ def main():
 
             # training Discriminator
             D.zero_grad()
-            out_D = D(batch_x, batch_y)
+            out_D = D(batch_x, batch_y).squeeze()
             D_real_loss = loss_bce(out_D, torch.ones(out_D.size()).to(device))
-            # TODO
+
+            out_G = G(batch_x)
+            out_D = D(batch_x, out_G).squeeze()
+            D_fake_loss = loss_bce(out_D, torch.zeros(out_D.size()).to(device))
+
+
 
 
 
