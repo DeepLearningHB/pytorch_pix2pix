@@ -82,7 +82,8 @@ class Discriminator(nn.Module):
         )
 
 
-    def forward(self, img):
+    def forward(self, img_real, img_fake):
+        img = torch.cat([img_real, img_fake], dim=1)
         return self.down(img)
 
 if __name__ == "__main__":

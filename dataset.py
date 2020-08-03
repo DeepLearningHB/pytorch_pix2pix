@@ -15,6 +15,9 @@ class Pix2PixDataset(Dataset):
         base_path = os.path.join('/media/data2/dataset/Pix2pix/maps', 'train' if is_train else 'val')
         self.total_data = glob.glob(os.path.join(base_path, "*.*"))
         self.transform = transforms.Compose([
+            # transforms.ToPILImage(),
+            # transforms.RandomHorizontalFlip(p=0.5),
+            # transforms.RandomVerticalFlip(p=0.5),
             transforms.ToTensor()
         ])
 
