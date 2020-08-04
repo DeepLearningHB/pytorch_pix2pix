@@ -27,17 +27,19 @@ def main():
     G = Generator().to(device)
     D = Discriminator().to(device)
 
+    G = nn.DataParallel(G, output_device=0)
+    D = nn.DataParallel(D, output_device=0)
+
     if len(os.listdir(weight_saved_path)) != 0:
-        state = torch.load(sorted(glob.glob(os.path.join(weight_saved_path, "*.pth"))[-1]))
+        state = torch.load(sorted(glob.glob(os.path.join(weight_saved_path, "*.*")))[-1])
         G.load_state_dict(state['generator'])
-        print("Generate loaded.", weight_saved_path)
+        print("Generate loaded.", sorted(glob.glob(os.path.join(weight_saved_path, "*.*")))[-1])
         D.load_state_dict(state['discriminator'])
-        print("Discriminator loaded.", weight_saved_path)
+        print("Discriminator loaded.", sorted(glob.glob(os.path.join(weight_saved_path, "*.*")))[-1])
     else:
         print('From scratch training')
 
-    G = nn.DataParallel(G, output_device=0)
-    D = nn.DataParallel(D, output_device=0)
+
 
     loss_bce = nn.BCELoss().to(device)
     l1_loss = nn.L1Loss().to(device)
