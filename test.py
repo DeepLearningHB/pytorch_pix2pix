@@ -20,9 +20,10 @@ class Inference:
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.model.to(self.device)
         print('Device:', self.device)
+        self.model.eval()
 
     def _load_weight(self, epoch):
-        assert os.path.exists(os.path.join("weights", "model_"+str(epoch).zfill(3)+".pth")), 'FileNotFoundError'
+        assert os.path.exists(os.path.join("./weights", "model_"+str(epoch).zfill(3)+".pth")), 'FileNotFoundError'
         state = torch.load(os.path.join("./weights", "model_"+str(epoch).zfill(3)+".pth"))
         self.model.load_state_dict(state['generator'])
         print("Model load finished!", os.path.join("./weights", "model_"+str(epoch).zfill(3)+".pth"))

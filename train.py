@@ -55,6 +55,8 @@ def main():
         avg_G_loss = 0
         avg_D_loss = 0
         count = 0
+        G.train()
+        D.train()
         for idx, batch in enumerate(train_loader):
             batch_x = batch['data_x'].to(device)
             batch_y = batch['data_y'].to(device)
@@ -89,7 +91,9 @@ def main():
             optim_G.step()
             count += 1
 
-        if ep % 3 == 0:
+        if ep % 5 == 0:
+            G.eval()
+            D.eval()
             state = {
                 'generator':G.state_dict(),
                 'discriminator': D.state_dict()
