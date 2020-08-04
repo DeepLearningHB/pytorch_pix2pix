@@ -63,7 +63,7 @@ class Generator(nn.Module):
         up4 = self.up3(up3, d_2)
         to_out = torch.cat([up4, d_1], dim=1)
         out = self.bottleneck2(to_out)
-        return out
+        return F.sigmoid(out)
 
 
 class Discriminator(nn.Module):
@@ -84,7 +84,7 @@ class Discriminator(nn.Module):
 
     def forward(self, img_real, img_fake):
         img = torch.cat([img_real, img_fake], dim=1)
-        return self.down(img)
+        return F.sigmoid(self.down(img))
 
 if __name__ == "__main__":
     from torchsummary import summary

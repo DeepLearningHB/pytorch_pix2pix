@@ -1,6 +1,5 @@
 from torch.utils.data import Dataset, DataLoader
 import os
-os.environ['CUDA_VISIBLE_DEVICES'] = "1, 3"
 import torch
 import glob
 import numpy as np
@@ -25,7 +24,8 @@ class Pix2PixDataset(Dataset):
         return len(self.total_data)
 
     def __getitem__(self, index):
-        pair_image = cv2.imread(self.total_data[index])
+        pair_image = cv2.resize(cv2.imread(self.total_data[index]), (512, 256))
+
         data_x = self.transform(pair_image[:, :pair_image.shape[1] // 2, :])
         data_y = self.transform(pair_image[:, pair_image.shape[1] // 2:, :])
         return {'data_x': data_x, 'data_y': data_y}
