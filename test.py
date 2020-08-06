@@ -11,7 +11,7 @@ class Inference:
     def __init__(self):
         self.model = Generator()
         self.model = nn.DataParallel(self.model, output_device=0)
-        self._load_weight(87)
+        self._load_weight(295)
         self.transform = transforms.Compose([
             transforms.ToTensor()
         ])

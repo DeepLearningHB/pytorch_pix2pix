@@ -21,7 +21,7 @@ class UpConv(nn.Module):
         self.upconv = nn.Sequential(
             nn.Upsample(scale_factor=2),
             nn.Conv2d(in_channel, out_channel, 3, 1, 1),
-            nn.ReLU()
+            nn.LeakyReLU(0.2)
         )
 
     def forward(self, img1, img2):
